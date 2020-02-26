@@ -1,3 +1,16 @@
+/* Instructions
+ * 
+ * Your will lead your characters through a board of 20 squares using a six-sided die.
+ * Watch out for the snakes that roam the board -- they will push you back 2 spaces if you land on them!
+ * Try to reach ladders -- they will help you move forward 3 spaces!
+ * At the end of each round you can press space to see the currrent standings.
+ * 
+ * Try to get to the crown first. Good luck!
+ * 
+ * @version Feb 26, 2020
+ * @authors A. Irwin, G. Cunningham
+ */
+
 import java.util.Scanner;
 import java.util.ArrayList;
 
@@ -5,19 +18,19 @@ public class PlayGame{
   
   public static void main(String[] args){
     
-    int playerUnit = 0;
-    int turn = 0;
+    int playerUnit = 0; 
+    int turn = 0; 
     ArrayList<GamePlayer> players = new ArrayList<GamePlayer>();
     boolean gameOver = false;
     
     Scanner scan= new Scanner(System.in);
     
-    //figures out how many people are playing
-    System.out.println("How many people are playing?");
+    //Figures out how many people are playing
+    System.out.println("\nWelcome to Snakes and Ladders!\nYou are trying to get to the crown first using a six-sided die. \nAim for ladders and avoid snakes! \nIf you want to see the standings between rounds, press the space bar and then enter.\nGood luck!\n\nHow many people are playing?");
     int numberOfPlayers = scan.nextInt();
     scan.nextLine();
     
-    //creates the players and places them in ArrayList
+    //Creates the players and places them in ArrayList
     for(int i = 0; i < numberOfPlayers; i++){
       
       playerUnit++;
@@ -28,41 +41,53 @@ public class PlayGame{
       
     }
     
-    //checks to see if game is over
+    //Checks to see if game is over
     while(!gameOver){
       
       turn++;
       System.out.println("\nTurn " + turn + ":\n");
       
-      //cycles through players
+      //Cycles through players
       for(GamePlayer p: players){
-        //makes sure one of the previous players of the turn hasn't won already
+        //Makes sure one of the previous players of the turn hasn't won already
         if(!gameOver){
           System.out.println(p.getName() + " moves " + p.move() + " spaces.");
           
-          //checks to see if the player has hit a slide or ladder
+          //Checks to see if the player has hit a slide or ladder
           if(p.ladder()){
-            p.changePosition(2);
-            System.out.println(p.getName() + " has found a ladder! They move up two spaces!");
+            p.changePosition(3);
+            System.out.println(p.getName() + " has found a ladder! They move up three spaces!");
           }
-          else if(p.slide()){
-            p.changePosition(-3);
-            System.out.println(p.getName() + " has hit a slide! They move back three spaces.");
+          else if(p.snake()){
+            p.changePosition(-2);
+            System.out.println(p.getName() + " has hit a snake! They move back two spaces.");
           }
         }
         
         System.out.println();
         
-        //checks to see if someone has won
+        //Checks to see if someone has won
         if(p.getPosition() >= 20){
           System.out.println(p.getName() + " wins!");
           gameOver = true;
         }
       }
+      
+      //Adds a transition so that the game moves slower
       if(!gameOver){
-        System.out.println("Press enter to continue");
-        String holder = scan.nextLine();
+        System.out.println("Continue?");
+        String standings = scan.nextLine();
+        
+        if(standings.equals(" ")){
+          for(GamePlayer p: players){
+            System.out.println(p);
+          }
+          System.out.println("Continue?");
+          standings = scan.nextLine();
+        }
       }
     }
+    
   }
 }
+
