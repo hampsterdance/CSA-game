@@ -38,15 +38,15 @@ public class GamePlayer{
   public boolean ladder(){
     if(position%5 == 0){
       return true;
-      //true will make it move up three spaces
+      //true will make it move up two spaces
     }
     return false;
   }
   
-  public boolean slide(){
+  public boolean snake(){
     if(position%3 == 0 && position != 15){
       return true;
-      //true will make it move back two spaces
+      //true will make it move back three spaces
     }
     return false;
   }
